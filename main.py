@@ -4,7 +4,7 @@ import json
 import os
 
 
-def getData(file):
+def get_data(file):
     """
     get data from files
     :param file: list with names of json files
