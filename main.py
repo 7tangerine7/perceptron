@@ -40,22 +40,31 @@ def vectors_change(first, second):
     data[:f, 4], data[f:, 4] = first[:, 0] * first[:, 1], second[:, 0] * second[:, 1]
     data[:f, 5], data[f:, 5] = data[:f, 4], data[f:, 4]
     data[:f, 6], data[f:, 6] = first[:, 1] ** 2, second[:, 1] ** 2
-    data[f:, 7] = 2  # 8th element for class
+    data[f:, 7] = 0  # 8th element shows class
     return data
 
 
-def perceptron(first, second):
+def perceptron(data):
     """
     learning parameters
     """
-    parameter = np.zeros(7)
+    temp = np.zeros(7)  # vector lambda
+    y = data[:, 7] * (data[:, :7] @ temp.T)
+    while y.any() <= 0:
+        idx = np.where(y == 0)
+        wrong_class = data[idx]
+        temp += wrong_class[0, 7] * wrong_class[0, :7]
+        y = data[:, 7] * (data[:, :7] @ temp.T)
+    return temp
 
 
 if __name__ == '__main__':
     files = ['train_01.json', 'train_02.json']
     train_first, train_second, test_first, test_second = get_data(files)
     train_data = vectors_change(train_first, train_second)
-    print(train_data)
+    param = perceptron(train_data)
+    print(param)
+
 
 
 
