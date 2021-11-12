@@ -157,8 +157,8 @@ def classification(theta_t, sigma_t, m_t, data):
     classes_t = np.where(result > theta_t, -1, 1)
     return classes_t
 
+def main():
 
-if __name__ == '__main__':
     doctest.testmod()
     files = 'train_01.json'
 
@@ -179,5 +179,8 @@ if __name__ == '__main__':
     classes = classification(theta, sigma, m, test_data)
     print(classes)
 
+
+if __name__ == '__main__':
+    main()
 
 
