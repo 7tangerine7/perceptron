@@ -9,6 +9,7 @@ def draw(x,y):
     plt.scatter(y[:, 0], y[:, 1], marker='o', color='green')
     plt.show()
 
+
 def draw_classes(x, y, m_t, sigma_t, theta_t):
 
     d = np.linspace(0, 1)
