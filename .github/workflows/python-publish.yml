@@ -7,7 +7,7 @@ on:
       - main
 jobs:
   build:
-    runs-on: [ubuntu-latest, windows-lates]
+    runs-on: [ubuntu-latest, windows-latest]
     strategy:
       matrix:
         python-version: [ '2.x', '3.x', 'pypy-2.7', 'pypy-3.6', 'pypy-3.7' ]
