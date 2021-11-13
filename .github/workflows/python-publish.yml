@@ -8,30 +8,30 @@ on:
 
 jobs:
     build-n-publish:
-    name: Build and publish Python distribution
-    runs-on: ubuntu-18.04
-    steps:
-        - uses: actions/checkout@master
-        - name: Initialize Python 3.7
-        - uses: actions/setup-python@v1
-          with:
+        name: Build and publish Python distribution
+        runs-on: ubuntu-18.04
+        steps:
+          - uses: actions/checkout@master
+          - name: Initialize Python 3.7
+          - uses: actions/setup-python@v1
+            with:
                 python-version: 3.10
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install numpy
-            pip install matplotlib
-        - name: ---
-          run: |
-            # stop the build if there are Python syntax errors or undefined names
-            numpy . --count --select=E9,F63,F7,F82 --show-source --statistics
-            matplotlib . --count --select=E9,F63,F7,F82 --show-source --statistics
-            # exit-zero treats all errors as warnings.
-            numpy . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-            matplotlib . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-        - name: Build binary wheel and a source tarball
-          run: python setup.py sdist
-        - name: Publish distribution to Test PyPI
+          - name: Install dependencies
+            run: |
+                python -m pip install --upgrade pip
+                pip install numpy
+                pip install matplotlib
+          - name: ---
+            run: |
+                # stop the build if there are Python syntax errors or undefined names
+                numpy . --count --select=E9,F63,F7,F82 --show-source --statistics
+                matplotlib . --count --select=E9,F63,F7,F82 --show-source --statistics
+                # exit-zero treats all errors as warnings.
+                numpy . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+                matplotlib . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          - name: Build binary wheel and a source tarball
+            run: python setup.py sdist
+          - name: Publish distribution to Test PyPI
           uses: pypa/gh-action-pypi-publish@master
           with:
             password: ${{ secrets.test_pypi_password }}
