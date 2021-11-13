@@ -9,11 +9,11 @@ on:
 jobs:
     build-n-publish:
         name: Build and publish Python distribution
-        runs-on: ubuntu-18.04
+        runs-on: windows-10
         steps:
           - uses: actions/checkout@master
-          - name: Initialize Python 3.7
-          - uses: actions/setup-python@v1
+          - name: Initialize Python 3.10
+          - uses: actions/setup-python@v2
             with:
                 python-version: 3.10
           - name: Install dependencies
