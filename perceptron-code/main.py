@@ -146,7 +146,7 @@ def classification(theta_t, sigma_t, m_t, data):
     :return:
 
     >>> classification(0.06, np.array([[1, 2], [1, 3]]), np.array([1, 1]), np.array([[2, 1], [-1, 3]]))
-    array([ -1, 1])
+    array(['inside', 'outside'], dtype='<U7')
     """
     k = len(data)
     s = data - np.tile(m_t, (k, 1))
@@ -154,28 +154,26 @@ def classification(theta_t, sigma_t, m_t, data):
     temp = np.diag(temp)
     result = 1 / (2 * np.pi * 1 / np.sqrt(np.linalg.det(sigma_t))) * np.exp(temp)
 
-    classes_t = np.where(result > theta_t, -1, 1)
+    classes_t = np.where(result > theta_t, "inside", "outside")
     return classes_t
+
 
 def main():
 
-    doctest.testmod()
-    files = 'train_01.json'
-
+    files = "test.json"
     first, second = get_data(files)
-    m = int(len(first) * 0.9)
-    n = int(len(second) * 0.9)
-    train_first, test_first = first[:m, :], first[m:, :]
-    train_second, test_second = second[:n, :], second[n:, :]
-    train_data = vectors_change(train_second, train_first)  # first: -1, second: 1
+    train_data = vectors_change(second, first)  # first: -1, second: 1
     draw(second, first)
-
-    test_data = np.vstack((test_second, test_first))
 
     param = perceptron(train_data, np.zeros(7))
 
     m, sigma, theta = parameters(param)
-    draw_classes(second, first,  m, sigma, theta)
+
+    mean = m[0]
+    std = 1
+    test_data = np.random.normal(mean, std, size=(5, 2))
+
+    draw_classes(second, first, test_data,  m, sigma, theta)
     classes = classification(theta, sigma, m, test_data)
     print(classes)
 
